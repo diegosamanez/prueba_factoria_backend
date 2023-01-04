@@ -14,9 +14,9 @@ export default class Repository<T> implements IRepository<T> {
     const data = await this.model.constructor.find(id);
     return data || null;
   }
-  public async create(item: Partial<T>): Promise<boolean> {
+  public async create(item: Partial<T>): Promise<T | null> {
     const data = await this.model.constructor.create(item);
-    return data.$isPersisted || false;
+    return data || null;
   }
   public async update(id: number, item: Partial<T>): Promise<boolean> {
     const result = await this.model.constructor.query().where('id', id).update(item);
