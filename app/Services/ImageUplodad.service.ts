@@ -1,4 +1,3 @@
-import Application from '@ioc:Adonis/Core/Application'
 import { MultipartFileContract } from '@ioc:Adonis/Core/BodyParser'
 import Drive from '@ioc:Adonis/Core/Drive'
 
