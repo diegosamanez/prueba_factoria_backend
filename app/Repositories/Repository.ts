@@ -7,22 +7,27 @@ export default class Repository<T> implements IRepository<T> {
   }
 
   public async all(): Promise<T[]> {
+    // @ts-ignore
     const data = await this.model.constructor.all();
     return data || [];
   }
   public async find(id: number): Promise<T> {
+    // @ts-ignore
     const data = await this.model.constructor.find(id);
     return data || null;
   }
   public async create(item: Partial<T>): Promise<T | null> {
+    // @ts-ignore
     const data = await this.model.constructor.create(item);
     return data || null;
   }
   public async update(id: number, item: Partial<T>): Promise<boolean> {
+    // @ts-ignore
     const result = await this.model.constructor.query().where('id', id).update(item);
     return result > 0;
   }
   public async delete(id: number): Promise<boolean> {
+    // @ts-ignore
     const result = await this.model.constructor.query().where('id', id).delete();
     return result > 0;
   }

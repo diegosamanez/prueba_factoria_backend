@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Image from 'App/Models/Image';
 import ImageRepository from 'App/Repositories/ImageRepository';
+import ImageUploadService from 'App/Services/ImageUplodad.service';
 export default class ImagesController {
   constructor(private imageRepository: ImageRepository) {
     this.imageRepository = new ImageRepository(new Image);
@@ -18,7 +19,9 @@ export default class ImagesController {
   }
 
   public async create({ request }: HttpContextContract) {
-    const { name, path } = request.body();
+    const { name } = request.body();
+    const coverImage = request.file('image');
+    const path = await ImageUploadService.uploadImage(coverImage);
     const image = await this.imageRepository.create({ name, path });
     return image;
   }
