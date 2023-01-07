@@ -20,8 +20,11 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/images', 'ImagesController.index')
-Route.post('/images', 'ImagesController.create')
-Route.get('/images/:id', 'ImagesController.show')
-Route.put('/images/:id', 'ImagesController.update')
-Route.delete('/images/:id', 'ImagesController.destroy')
+Route.group(() => {
+  Route.get('/images', 'ImagesController.index')
+  Route.post('/images', 'ImagesController.create')
+  Route.get('/images/:id', 'ImagesController.show')
+  Route.put('/images/:id', 'ImagesController.update')
+  Route.delete('/images/:id', 'ImagesController.destroy')
+}).prefix('/api/v1')
+

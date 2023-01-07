@@ -1,0 +1,36 @@
+# open api
+openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3333
+paths:
+  /api/v1/images:
+    get:
+      summary: Get all images
+      description: Get all images
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Image'
+components:
+  schemas:
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+        path:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - path
+        - name
