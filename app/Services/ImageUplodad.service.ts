@@ -10,4 +10,21 @@ export default class ImageUploadService {
     const urlFileName = await Drive.getUrl(fileName)
     return urlFileName
   }
+
+  public static async updateImage(file: MultipartFileContract | null | undefined, fileName: string): Promise<string> {
+    if (!file) {
+      return fileName
+    }
+    await Drive.delete(fileName.replace('/uploads/', ''))
+    const newFileName = `${new Date().getTime()}.${file.extname}`
+    await file.moveToDisk('./', {
+      name: newFileName,
+    })
+    const urlFileName = await Drive.getUrl(newFileName)
+    return urlFileName
+  }
+
+  public static async deleteImage(fileName: string): Promise<void> {
+    await Drive.delete(fileName)
+  }
 }
