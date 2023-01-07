@@ -21,10 +21,15 @@ export default class Repository<T> implements IRepository<T> {
     const data = await this.model.constructor.create(item);
     return data || null;
   }
-  public async update(id: number, item: Partial<T>): Promise<boolean> {
+  public async update(id: number, item: Partial<T>): Promise<T | null> {
     // @ts-ignore
-    const result = await this.model.constructor.query().where('id', id).update(item);
-    return result > 0;
+    const model = await this.model.constructor.find(id);
+    if (!model) {
+      return null;
+    }
+    // @ts-ignore
+    const result = await model.merge(item).save();
+    return result || null;
   }
   public async delete(id: number): Promise<boolean> {
     // @ts-ignore
