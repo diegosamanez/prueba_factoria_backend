@@ -145,7 +145,24 @@ test.group('Images', (group) => {
 
   test('update nonexistent image', async ({ client }) => {
     const response = await client.put(`${api}/100000000`)
+      .fields({
+        name: 'test updated',
+      })
     response.assertStatus(404)
+  })
+
+  test('update image with invalid data', async ({ client }) => {
+    Drive.fake()
+    const fakeImage = await file.generateJpg('1mb')
+
+    const fakeData = await client.post(api)
+      .file('image', fakeImage.contents, {filename: fakeImage.name})
+      .fields({
+        name: 'test',
+      })
+    const response = await client.put(`${api}/${fakeData.body().id}`)
+    response.assertStatus(400)
+    Drive.restore()
   })
 
   test('delete image', async ({ client }) => {
