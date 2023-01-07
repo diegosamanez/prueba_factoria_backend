@@ -12,7 +12,7 @@ export default class Image extends BaseModel {
   public updatedAt: DateTime
 
   @column()
-  public name: string
+  public name: string | null
 
   @column()
   public path: string
