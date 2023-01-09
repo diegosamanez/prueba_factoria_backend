@@ -25,6 +25,6 @@ export default class ImageUploadService {
   }
 
   public static async deleteImage(fileName: string): Promise<void> {
-    await Drive.delete(fileName)
+    await Drive.delete(fileName.replace('/uploads/', ''))
   }
 }

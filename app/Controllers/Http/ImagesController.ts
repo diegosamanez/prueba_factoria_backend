@@ -54,12 +54,14 @@ export default class ImagesController {
 
   public async destroy({ params, response }: HttpContextContract) {
     const { id } = params;
+    const findImage = await this.imageRepository.find(id)
     const image = await this.imageRepository.delete(id);
     // header 204: No Content
     if(!image) {
       response.status(404);
       return { message: 'Image not found' };
     }
+    await ImageUploadService.deleteImage(findImage.path)
     response.status(204);
     return image;
   }
